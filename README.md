@@ -1,4 +1,4 @@
-Straight forward realization of dameralu-levenshtein distance on Cython.
+# Straight forward realization of dameralu-levenshtein distance on Cython. #
 
 In order to compile you need Cython installed.
 
