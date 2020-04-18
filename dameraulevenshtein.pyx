@@ -25,8 +25,12 @@
 
 from cpython.version cimport PY_MAJOR_VERSION
 from libc.stdlib cimport calloc, free
+from cpython.mem cimport PyMem_Malloc, PyMem_Realloc, PyMem_Free
+from cpython.string cimport PyString_AsString
 import numpy as np
 cimport numpy as np
+cdef extern from "Python.h":
+    char* PyUnicode_AsUTF8(object unicode)
 
 # these guys are used to index into storage inside damerau_levenshtein_distance()
 cdef Py_ssize_t TWO_AGO = 0
@@ -165,11 +169,6 @@ cpdef np.ndarray[np.uint32_t, ndim=1] damerau_levenshtein_distance_ndarray(seq, 
     dl = np.vectorize(damerau_levenshtein_distance, otypes=[np.uint32])
     return dl(seq, array)
 
-from cpython.mem cimport PyMem_Malloc, PyMem_Realloc, PyMem_Free
-from cpython.string cimport PyString_AsString
-cdef extern from "Python.h":
-    char* PyUnicode_AsUTF8(object unicode)
-
 cdef char ** to_cstring_array(list_str):
     cdef unsigned int len_list = len(list_str)
     cdef char **ret = <char **>PyMem_Malloc(len_list * sizeof(char *))
@@ -180,11 +179,11 @@ cdef char ** to_cstring_array(list_str):
 cpdef float damerau_levenshtein_diversity(array):
     """
         Compute an average pairwise DL distance between all seq in the array. First compute the sum of all pairwise
-        DL distances from array. Then divide for the total number of pairs for n-seq array: n * (n + 1) / 2.        
+        DL distances from array. Then divide for the total number of pairs for n-seq array: n * (n + 1) / 2.
     """
     cdef int dl_distance = 0
-    cdef int len_array = len(array)
-    cdef int i, j
+    cdef Py_ssize_t len_array = len(array)
+    cdef Py_ssize_t i, j
     for i in range(len_array):
         for j in range(i + 1, len_array):
             dl_distance = dl_distance + damerau_levenshtein_distance(array[i], array[j])

@@ -1,4 +1,4 @@
-rem echo off
+REM echo off
 (
   echo;from setuptools import setup, Extension
   echo;from Cython.Build import cythonize
@@ -15,5 +15,5 @@ rem echo off
   echo;^)
 ) > "setup.py"
 
-call "D:\Soft\anaconda3\Scripts\activate.bat" "D:\Soft\anaconda3"
+call "D:\Soft\anaconda3\Scripts\activate.bat" "D:\Soft\anaconda3\envs\levenshtein"
 python setup.py build_ext --inplace

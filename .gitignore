@@ -1,6 +1,1 @@
-build/temp.win-amd64-3.7/Release/dameraulevenshtein.obj
-build/temp.win-amd64-3.7/Release/dameraulevenshtein.cp37-win_amd64.lib
-build/temp.win-amd64-3.7/Release/dameraulevenshtein.cp37-win_amd64.exp
-build/lib.win-amd64-3.7/dameraulevenshtein.cp37-win_amd64.pyd
-dameraulevenshtein.cp37-win_amd64.pyd
-dameraulevenshtein.c
+build/*
